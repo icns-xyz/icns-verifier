@@ -1,23 +1,5 @@
 import { normalizeBech32 } from "@cosmjs/encoding";
-
-interface TwitterUser {
-  created_at: string;
-  id: string;
-  name: string;
-  username: string;
-}
-
-export interface StreamedTweet {
-  data: {
-    author_id: string;
-    edit_history_tweet_ids: string[];
-    id: string;
-    text: string;
-  };
-  includes: {
-    users: TwitterUser[];
-  };
-}
+import { Tweet } from "./twitter";
 
 function normalizeTwitterHandle(twitterHandle: string) {
   return twitterHandle.toLowerCase();
@@ -26,40 +8,37 @@ function normalizeTwitterHandle(twitterHandle: string) {
 const CLAIM_ADDRESS_REGEX =
   /I am claiming the #ICNS name @(\w+) for (osmo[a-zA-Z0-9]+)/i;
 
-export function parseTweet(tweet: StreamedTweet) {
+export function parseTweet(tweet: Tweet) {
   const {
-    data: { text, author_id },
+    data: [{ text, author_id }],
     includes: { users },
   } = tweet;
   const matches = text.match(CLAIM_ADDRESS_REGEX);
   if (!matches || matches.length < 3) {
-    return null;
+    throw new Error("Does not match correct tweet format.");
   }
 
   const user = users.find(({ id }) => id === author_id);
   if (!user) {
-    console.error(
+    throw new Error(
       "Improperly formatted response -- could not find user object."
     );
-    return null;
   }
   const [, rawClaimHandle, rawOsmoAddress] = matches;
-  const claimHandle = normalizeTwitterHandle(rawClaimHandle);
-  if (claimHandle !== user.username.toLowerCase()) {
-    console.error("Claimed handle does not match username.");
-    return null;
+  const twitterHandle = normalizeTwitterHandle(rawClaimHandle);
+  if (twitterHandle !== user.username.toLowerCase()) {
+    throw new Error("Claimed handle does not match username.");
   }
 
-  let osmoAddress: string;
+  let osmosisAddress: string;
   try {
-    osmoAddress = normalizeBech32(rawOsmoAddress);
+    osmosisAddress = normalizeBech32(rawOsmoAddress);
   } catch (_e) {
-    console.error("Failed to parse Osmosis address.");
-    return null;
+    throw new Error("Failed to parse Osmosis address.");
   }
 
   return {
-    claimHandle,
-    osmoAddress,
+    twitterHandle,
+    osmosisAddress,
   };
 }
