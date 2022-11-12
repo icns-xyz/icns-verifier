@@ -1,4 +1,6 @@
+require("dotenv").config();
 import express from "express";
+import { setupClient } from "./cosmwasm";
 import {
   deleteAllRules,
   getAllRules,
@@ -27,6 +29,7 @@ app.listen(port, async () => {
   console.log("Now listening for tweets");
   console.log("------------------------");
   console.log();
-
+  const { cosmwasmClient, osmosisAddress } = await setupClient();
+  // TODO: Listen for requests and verify
   streamConnect(0);
 });

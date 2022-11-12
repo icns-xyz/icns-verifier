@@ -1,8 +1,10 @@
+import assert from "assert";
 import { parseTweet } from "./parsing";
 
 const needle = require("needle");
 
-const token = process.env.BEARER_TOKEN;
+const bearerToken = process.env.TWITTER_BEARER_TOKEN;
+assert(!!bearerToken, "Must provide TWITTER_BEARER_TOKEN.");
 
 const rulesURL = "https://api.twitter.com/2/tweets/search/stream/rules";
 const streamURL =
@@ -18,7 +20,7 @@ interface TweetRuleResponse extends TweetRule {
 }
 
 interface FitleredStreamRules {
-  data: TweetRuleResponse[];
+  data?: TweetRuleResponse[];
 }
 
 const rules: TweetRule[] = [
@@ -31,7 +33,7 @@ const rules: TweetRule[] = [
 export async function getAllRules(): Promise<FitleredStreamRules> {
   const response = await needle("get", rulesURL, {
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${bearerToken}`,
     },
   });
 
@@ -44,6 +46,9 @@ export async function getAllRules(): Promise<FitleredStreamRules> {
 }
 
 export async function deleteAllRules(rules: FitleredStreamRules) {
+  if (!rules.data) {
+    return;
+  }
   const ids = rules.data.map((rule) => rule.id);
 
   const data = {
@@ -55,7 +60,7 @@ export async function deleteAllRules(rules: FitleredStreamRules) {
   const response = await needle("post", rulesURL, data, {
     headers: {
       "content-type": "application/json",
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${bearerToken}`,
     },
   });
 
@@ -74,7 +79,7 @@ export async function setRules() {
   const response = await needle("post", rulesURL, data, {
     headers: {
       "content-type": "application/json",
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${bearerToken}`,
     },
   });
 
@@ -89,7 +94,7 @@ export function streamConnect(retryAttempt: number) {
   const stream = needle.get(streamURL, {
     headers: {
       "User-Agent": "v2FilterStreamJS",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${bearerToken}`,
     },
     timeout: 20000,
   });
