@@ -17,7 +17,7 @@ yarn
 yarn dev
 ```
 
-And you can query `http://localhost:8080/verify/<request-id>` to verify the given request, if it exists in the [claimname](https://github.com/osmosis-labs/icns/blob/main/contracts/claimname) contract storage.
+And you can query `http://localhost:8080/verify/<request-id>` to verify the given request, if it exists in the [claimname](https://github.com/osmosis-labs/icns/blob/main/contracts/claimname) contract storage and your address is a verifier.
 
 ## Production
 coming soon!
