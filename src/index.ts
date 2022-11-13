@@ -31,10 +31,10 @@ app.post("/verify/:requestId", async (req, res) => {
     res.status(500).send("Waiting on CosmWasm; please try again soon.");
     return;
   }
-  const { requestId } = req.params;
+  const requestId = Number(req.params.requestId);
   const { tweetId, requesterHandle, requesterAddress } =
     await cosmwasmClient.getVerificationRequestById(requestId);
-  const tweet = await getTweetById(tweetId);
+  const tweet = await getTweetById(String(tweetId));
   if (!tweet) {
     res.status(404).send("Tweet not found.");
     return;
@@ -43,15 +43,17 @@ app.post("/verify/:requestId", async (req, res) => {
   const isVerified =
     osmosisAddress === requesterAddress && twitterHandle === requesterHandle;
   if (isVerified) {
-    await cosmwasmClient.verifyRequest(requestId, true);
+    const verifyResponse = await cosmwasmClient.verifyRequest(requestId, true);
+    res.status(200).send(verifyResponse);
   }
-  res.status(200).send(isVerified ? "Verified" : "Tweet invalid");
+  res.status(200).send("Not verified.");
 });
 
 app.listen(port, async () => {
-  console.log(`ICNS verifier listening on port ${port}`);
+  console.log(`ICNS verifier listening on port ${port}.`);
   await cosmwasmClient.initialize(
     OSMOSIS_RPC_ENDPOINT,
     OSMOSIS_WALLET_MNEMONIC
   );
+  console.log(`Verifier address: ${cosmwasmClient.osmosisAddress}`);
 });

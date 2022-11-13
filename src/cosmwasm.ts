@@ -1,19 +1,30 @@
-import { AccountData, Secp256k1HdWallet } from "@cosmjs/amino";
+import { Secp256k1HdWallet } from "@cosmjs/amino";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import { Decimal } from "@cosmjs/math";
+
+interface VerificationRequest {
+  tweet_id: string;
+  twitter_handle: string;
+  owner_address: string;
+}
+
+interface GetVerificationRequestResponse {
+  verification_request: VerificationRequest;
+}
 
 export default class CosmWasmClient {
   claimNameContractAddress: string;
+  osmosisAddress: string | null;
   private _signingClient: SigningCosmWasmClient | null;
-  private _osmosisAddress: string | null;
 
   constructor(claimNameContractAddress: string) {
     this.claimNameContractAddress = claimNameContractAddress;
     this._signingClient = null;
-    this._osmosisAddress = null;
+    this.osmosisAddress = null;
   }
 
   isInitialized(): boolean {
-    return !!this._signingClient && !!this._osmosisAddress;
+    return !!this._signingClient && !!this.osmosisAddress;
   }
 
   private checkInitialized() {
@@ -27,34 +38,43 @@ export default class CosmWasmClient {
       prefix: "osmo",
     });
 
-    this._osmosisAddress = (await wallet.getAccounts())[0].address;
+    this.osmosisAddress = (await wallet.getAccounts())[0].address;
     this._signingClient = await SigningCosmWasmClient.connectWithSigner(
       rpcEndpoint,
-      wallet
+      wallet,
+      {
+        gasPrice: { amount: Decimal.one(0), denom: "uosmo" },
+      }
     );
   }
 
-  async getVerificationRequestById(requestId: string) {
+  async getVerificationRequestById(requestId: number) {
     this.checkInitialized();
-    const response = await this._signingClient!.queryContractSmart(
-      this.claimNameContractAddress,
-      {
-        get_verification_address: {
-          request_id: requestId,
-        },
-      }
-    );
+    const { verification_request }: GetVerificationRequestResponse =
+      await this._signingClient!.queryContractSmart(
+        this.claimNameContractAddress,
+        {
+          get_verification_request: {
+            request_id: requestId,
+          },
+        }
+      );
+
+    if (!verification_request) {
+      throw new Error("Verification request not found");
+    }
+
     return {
-      tweetId: response.tweet_id,
-      requesterHandle: response.twitter_handle,
-      requesterAddress: response.address,
+      tweetId: verification_request.tweet_id,
+      requesterHandle: verification_request.twitter_handle,
+      requesterAddress: verification_request.owner_address,
     };
   }
 
-  async verifyRequest(requestId: string, approved: boolean) {
+  async verifyRequest(requestId: number, approved: boolean) {
     this.checkInitialized();
     const response = await this._signingClient!.execute(
-      this._osmosisAddress!,
+      this.osmosisAddress!,
       this.claimNameContractAddress,
       {
         verify: {

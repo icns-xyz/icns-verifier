@@ -53,6 +53,9 @@ export async function getTweetById(tweetId: string): Promise<Tweet | null> {
   if (body?.data?.length && body?.includes?.users?.length) {
     return body as Tweet;
   }
-  console.error("Invalid tweet lookup response", { response, tweetId });
+  console.error("Invalid tweet lookup response", {
+    response,
+    tweetId,
+  });
   return null;
 }

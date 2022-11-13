@@ -31,6 +31,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/amino", "npm:0.29.3"],\
             ["@cosmjs/cosmwasm-stargate", "npm:0.29.3"],\
             ["@cosmjs/encoding", "npm:0.29.3"],\
+            ["@cosmjs/math", "npm:0.29.3"],\
             ["@types/express", "npm:4.17.14"],\
             ["@types/needle", "npm:2.5.3"],\
             ["@types/node", "npm:18.11.9"],\
@@ -1563,6 +1564,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/amino", "npm:0.29.3"],\
             ["@cosmjs/cosmwasm-stargate", "npm:0.29.3"],\
             ["@cosmjs/encoding", "npm:0.29.3"],\
+            ["@cosmjs/math", "npm:0.29.3"],\
             ["@types/express", "npm:4.17.14"],\
             ["@types/needle", "npm:2.5.3"],\
             ["@types/node", "npm:18.11.9"],\
