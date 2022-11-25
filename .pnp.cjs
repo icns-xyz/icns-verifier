@@ -32,13 +32,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/cosmwasm-stargate", "npm:0.29.3"],\
             ["@cosmjs/encoding", "npm:0.29.3"],\
             ["@cosmjs/math", "npm:0.29.3"],\
+            ["@types/elliptic", "npm:6.4.14"],\
             ["@types/express", "npm:4.17.14"],\
             ["@types/needle", "npm:2.5.3"],\
             ["@types/node", "npm:18.11.9"],\
+            ["@types/sha.js", "npm:2.4.0"],\
             ["dotenv", "npm:16.0.3"],\
+            ["elliptic", "npm:6.5.4"],\
             ["express", "npm:4.18.2"],\
             ["needle", "npm:3.1.0"],\
             ["nodemon", "npm:2.0.20"],\
+            ["sha.js", "npm:2.4.9"],\
             ["ts-node", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:10.9.1"],\
             ["typescript", "patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"]\
           ],\
@@ -442,6 +446,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/bn.js", [\
+        ["npm:5.1.1", {\
+          "packageLocation": "./.yarn/cache/@types-bn.js-npm-5.1.1-346449981b-e50ed2dd3a.zip/node_modules/@types/bn.js/",\
+          "packageDependencies": [\
+            ["@types/bn.js", "npm:5.1.1"],\
+            ["@types/node", "npm:18.11.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/body-parser", [\
         ["npm:1.19.2", {\
           "packageLocation": "./.yarn/cache/@types-body-parser-npm-1.19.2-f845b7b538-e17840c7d7.zip/node_modules/@types/body-parser/",\
@@ -459,6 +473,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/connect", "npm:3.4.35"],\
             ["@types/node", "npm:18.11.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/elliptic", [\
+        ["npm:6.4.14", {\
+          "packageLocation": "./.yarn/cache/@types-elliptic-npm-6.4.14-77735f3256-d5a64f540e.zip/node_modules/@types/elliptic/",\
+          "packageDependencies": [\
+            ["@types/elliptic", "npm:6.4.14"],\
+            ["@types/bn.js", "npm:5.1.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -549,6 +573,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/serve-static", "npm:1.15.0"],\
             ["@types/mime", "npm:3.0.1"],\
+            ["@types/node", "npm:18.11.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/sha.js", [\
+        ["npm:2.4.0", {\
+          "packageLocation": "./.yarn/cache/@types-sha.js-npm-2.4.0-844623a8de-0e1bd1a98d.zip/node_modules/@types/sha.js/",\
+          "packageDependencies": [\
+            ["@types/sha.js", "npm:2.4.0"],\
             ["@types/node", "npm:18.11.9"]\
           ],\
           "linkType": "HARD"\
@@ -1565,13 +1599,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/cosmwasm-stargate", "npm:0.29.3"],\
             ["@cosmjs/encoding", "npm:0.29.3"],\
             ["@cosmjs/math", "npm:0.29.3"],\
+            ["@types/elliptic", "npm:6.4.14"],\
             ["@types/express", "npm:4.17.14"],\
             ["@types/needle", "npm:2.5.3"],\
             ["@types/node", "npm:18.11.9"],\
+            ["@types/sha.js", "npm:2.4.0"],\
             ["dotenv", "npm:16.0.3"],\
+            ["elliptic", "npm:6.5.4"],\
             ["express", "npm:4.18.2"],\
             ["needle", "npm:3.1.0"],\
             ["nodemon", "npm:2.0.20"],\
+            ["sha.js", "npm:2.4.9"],\
             ["ts-node", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:10.9.1"],\
             ["typescript", "patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"]\
           ],\
@@ -2482,6 +2520,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/setprototypeof-npm-1.2.0-0fedbdcd3a-be18cbbf70.zip/node_modules/setprototypeof/",\
           "packageDependencies": [\
             ["setprototypeof", "npm:1.2.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["sha.js", [\
+        ["npm:2.4.9", {\
+          "packageLocation": "./.yarn/cache/sha.js-npm-2.4.9-025ae08917-80c152baa9.zip/node_modules/sha.js/",\
+          "packageDependencies": [\
+            ["sha.js", "npm:2.4.9"],\
+            ["inherits", "npm:2.0.4"],\
+            ["safe-buffer", "npm:5.2.1"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -42,3 +42,20 @@ export function parseTweet(tweet: Tweet) {
     osmosisAddress,
   };
 }
+
+// Tweet IDs are 64-bit unsigned integers, so we match for numbers
+// with max 20 decimal digits to prevent greedy matching from crashing
+// long, malformed inputs.
+// Source: https://developer.twitter.com/en/docs/twitter-ids
+const TWITTER_URL_REGEX =
+  /^https?:\/\/(www)?twitter.com\/\w+\/status\/([0-9]{1,20})/;
+
+export function getTweetIdFromUrl(tweetUrl: string): string {
+  const matches = tweetUrl.match(TWITTER_URL_REGEX);
+  if (!matches || matches.length < 3) {
+    throw new Error("Improperly formatted tweet URL.");
+  }
+
+  const [, , tweetId] = matches;
+  return tweetId;
+}
