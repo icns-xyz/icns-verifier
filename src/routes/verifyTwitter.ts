@@ -64,7 +64,7 @@ router.post(
       );
       res.status(200).send(signedResponse);
     } catch (err: any) {
-      res.status(400).send(err);
+      res.status(400).send({ error: err.toString() });
     }
   }
 );
