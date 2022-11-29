@@ -63,7 +63,7 @@ router.post(
         VERIFIER_PRIVATE_KEY
       );
       res.status(200).send(signedResponse);
-    } catch (err) {
+    } catch (err: any) {
       res.status(400).send(err);
     }
   }
