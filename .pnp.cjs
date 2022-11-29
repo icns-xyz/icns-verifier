@@ -47,6 +47,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["sha.js", "npm:2.4.9"],\
             ["ts-jest", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:29.0.3"],\
             ["ts-node", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:10.9.1"],\
+            ["twitter-api-sdk", "npm:1.2.1"],\
             ["typescript", "patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"]\
           ],\
           "linkType": "SOFT"\
@@ -1864,6 +1865,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["abort-controller", [\
+        ["npm:3.0.0", {\
+          "packageLocation": "./.yarn/cache/abort-controller-npm-3.0.0-2f3a9a2bcb-170bdba9b4.zip/node_modules/abort-controller/",\
+          "packageDependencies": [\
+            ["abort-controller", "npm:3.0.0"],\
+            ["event-target-shim", "npm:5.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["accepts", [\
         ["npm:1.3.8", {\
           "packageLocation": "./.yarn/cache/accepts-npm-1.3.8-9a812371c9-50c43d32e7.zip/node_modules/accepts/",\
@@ -3007,6 +3018,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["event-target-shim", [\
+        ["npm:5.0.1", {\
+          "packageLocation": "./.yarn/cache/event-target-shim-npm-5.0.1-cb48709025-1ffe3bb22a.zip/node_modules/event-target-shim/",\
+          "packageDependencies": [\
+            ["event-target-shim", "npm:5.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["execa", [\
         ["npm:5.1.1", {\
           "packageLocation": "./.yarn/cache/execa-npm-5.1.1-191347acf5-fba9022c8c.zip/node_modules/execa/",\
@@ -3527,6 +3547,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["sha.js", "npm:2.4.9"],\
             ["ts-jest", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:29.0.3"],\
             ["ts-node", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:10.9.1"],\
+            ["twitter-api-sdk", "npm:1.2.1"],\
             ["typescript", "patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"]\
           ],\
           "linkType": "SOFT"\
@@ -4797,6 +4818,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["node-fetch", [\
+        ["npm:2.6.7", {\
+          "packageLocation": "./.yarn/cache/node-fetch-npm-2.6.7-777aa2a6df-8d816ffd1e.zip/node_modules/node-fetch/",\
+          "packageDependencies": [\
+            ["node-fetch", "npm:2.6.7"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:15e88f013aab7f0ee21b80b2aacd9c758bcffd83a3a22c6e1971f032f68acc65ca544062c16a8bf5a5d2be6356f854582c1d469e633c7c65852e00a36d721d5f#npm:2.6.7", {\
+          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-7f26b10931/0/cache/node-fetch-npm-2.6.7-777aa2a6df-8d816ffd1e.zip/node_modules/node-fetch/",\
+          "packageDependencies": [\
+            ["node-fetch", "virtual:15e88f013aab7f0ee21b80b2aacd9c758bcffd83a3a22c6e1971f032f68acc65ca544062c16a8bf5a5d2be6356f854582c1d469e633c7c65852e00a36d721d5f#npm:2.6.7"],\
+            ["@types/encoding", null],\
+            ["encoding", null],\
+            ["whatwg-url", "npm:5.0.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/encoding",\
+            "encoding"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["node-gyp", [\
         ["npm:9.3.0", {\
           "packageLocation": "./.yarn/unplugged/node-gyp-npm-9.3.0-21c41a4dfd/node_modules/node-gyp/",\
@@ -5817,6 +5861,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["tr46", [\
+        ["npm:0.0.3", {\
+          "packageLocation": "./.yarn/cache/tr46-npm-0.0.3-de53018915-726321c5ea.zip/node_modules/tr46/",\
+          "packageDependencies": [\
+            ["tr46", "npm:0.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["ts-jest", [\
         ["npm:29.0.3", {\
           "packageLocation": "./.yarn/cache/ts-jest-npm-29.0.3-c1e6bc8a8a-541e51776d.zip/node_modules/ts-jest/",\
@@ -5908,6 +5961,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "@types/swc__wasm",\
             "@types/typescript",\
             "typescript"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["twitter-api-sdk", [\
+        ["npm:1.2.1", {\
+          "packageLocation": "./.yarn/cache/twitter-api-sdk-npm-1.2.1-15e88f013a-e931578087.zip/node_modules/twitter-api-sdk/",\
+          "packageDependencies": [\
+            ["twitter-api-sdk", "npm:1.2.1"],\
+            ["abort-controller", "npm:3.0.0"],\
+            ["node-fetch", "virtual:15e88f013aab7f0ee21b80b2aacd9c758bcffd83a3a22c6e1971f032f68acc65ca544062c16a8bf5a5d2be6356f854582c1d469e633c7c65852e00a36d721d5f#npm:2.6.7"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -6066,6 +6130,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["walker", "npm:1.0.8"],\
             ["makeerror", "npm:1.0.12"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["webidl-conversions", [\
+        ["npm:3.0.1", {\
+          "packageLocation": "./.yarn/cache/webidl-conversions-npm-3.0.1-60310f6a2b-c92a0a6ab9.zip/node_modules/webidl-conversions/",\
+          "packageDependencies": [\
+            ["webidl-conversions", "npm:3.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["whatwg-url", [\
+        ["npm:5.0.0", {\
+          "packageLocation": "./.yarn/cache/whatwg-url-npm-5.0.0-374fb45e60-b8daed4ad3.zip/node_modules/whatwg-url/",\
+          "packageDependencies": [\
+            ["whatwg-url", "npm:5.0.0"],\
+            ["tr46", "npm:0.0.3"],\
+            ["webidl-conversions", "npm:3.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\

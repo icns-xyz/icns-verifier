@@ -1,13 +1,18 @@
 # icns-twitter-verifier
 
+## Testing
+
+```
+yarn
+yarn test
+```
+
 ## Development
 
 Add an `.env` file and fill the following variables or manually add them in your terminal.
+
 ```
-TWITTER_BEARER_TOKEN=...
-OSMOSIS_RPC_ENDPOINT=...
-OSMOSIS_WALLET_MNEMONIC=...
-CLAIM_NAME_CONTRACT_ADDRESS=...
+VERIFIER_PRIVATE_KEY=...
 ```
 
 Run the development server:
@@ -17,7 +22,8 @@ yarn
 yarn dev
 ```
 
-And you can query `http://localhost:8080/verify/<request-id>` to verify the given request, if it exists in the [claimname](https://github.com/osmosis-labs/icns/blob/main/contracts/claimname) contract storage and your address is a verifier.
+And you can query `POST http://localhost:8080/api/verify_twitter` to verify the given request.
 
 ## Production
+
 coming soon!

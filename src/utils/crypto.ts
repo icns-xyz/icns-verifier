@@ -1,22 +1,21 @@
-import assert from "assert";
 import { BNInput, ec } from "elliptic";
 import { sha256 } from "sha.js";
 
-const { VERIFIER_PRIVATE_KEY } = process.env;
-assert(
-  VERIFIER_PRIVATE_KEY,
-  "VERIFIER_PRIVATE_KEY must be defined in environment"
-);
+export class ECDSASigner {
+  private signingKey: ec.KeyPair;
 
-const context = new ec("secp256k1");
-const signingKey = context.keyFromPrivate(VERIFIER_PRIVATE_KEY);
+  constructor(privateKey: string) {
+    const context = new ec("secp256k1");
+    this.signingKey = context.keyFromPrivate(privateKey);
+  }
 
-export function signSecp256k1(message: BNInput) {
-  return signingKey.sign(message).toDER();
-}
+  signSecp256k1(message: BNInput) {
+    return this.signingKey.sign(message).toDER();
+  }
 
-export function getSecp256k1PublicKey() {
-  return signingKey.getPublic().encode("array", false);
+  getSecp256k1PublicKey() {
+    return this.signingKey.getPublic().encode("array", false);
+  }
 }
 
 export function hashSha256(message: string) {
