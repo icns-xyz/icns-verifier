@@ -43,7 +43,6 @@ export async function verifyTwitter(
 
   return {
     signature: signer.signSecp256k1(hashSha256(msg)),
-    publicKey: signer.getSecp256k1PublicKey(),
     algorithm: "ecdsa_secp256k1_sha256",
   };
 }
