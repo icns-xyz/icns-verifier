@@ -11,3 +11,6 @@
 #.pnp.*
 
 .env
+
+# LevelsDB
+verifiedAuthTokens/
