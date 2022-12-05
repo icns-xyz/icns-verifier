@@ -14,6 +14,7 @@ interface VerifierRequestBody {
 }
 
 interface RequestMsgFormat {
+  unique_twitter_id: string;
   name: string;
   claimer: string;
   contract_address: string;
