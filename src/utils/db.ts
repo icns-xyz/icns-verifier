@@ -7,6 +7,14 @@ export async function markAsVerified(authToken: string) {
 }
 
 export async function checkVerified(authToken: string) {
-  const value = await db.get(authToken);
-  return !!value;
+  try {
+    const value = await db.get(authToken);
+    return !!value;
+  } catch (error: any) {
+    if (error.code === "LEVEL_NOT_FOUND") {
+      return false;
+    } else {
+      throw error;
+    }
+  }
 }
