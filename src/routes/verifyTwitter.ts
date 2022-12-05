@@ -36,7 +36,9 @@ export async function verifyTwitter(
   const { msg, authToken } = reqBody;
   const { name }: RequestMsgFormat = JSON.parse(msg);
 
-  if (await checkVerified(authToken)) {
+  const safeAuthToken = Buffer.from(authToken, "base64").toString("base64");
+
+  if (await checkVerified(safeAuthToken)) {
     return {
       status: 403,
       errors: ["authToken has already been verified"],
@@ -44,7 +46,7 @@ export async function verifyTwitter(
     };
   }
 
-  const usernameFromToken = await getTwitterUsername(authToken);
+  const usernameFromToken = await getTwitterUsername(safeAuthToken);
   if (!usernameFromToken) {
     return {
       status: 404,
@@ -62,7 +64,7 @@ export async function verifyTwitter(
   }
 
   const signer = new ECDSASigner(verifierPrivateKey);
-  await markAsVerified(authToken);
+  await markAsVerified(safeAuthToken);
 
   return {
     status: 200,
