@@ -11,14 +11,14 @@ assert(
   "VERIFIER_PRIVATE_KEY must be defined in environment"
 );
 
-const signer = new ECDSASigner(VERIFIER_PRIVATE_KEY);
+const signer = new ECDSASigner(Buffer.from(VERIFIER_PRIVATE_KEY));
 console.log("Your Pubkey is:", Buffer.from(signer.getSecp256k1PublicKey()).toString("base64"));
 
 const app = express();
 const port = 8080;
 
 app.use(express.json());
-app.use("/api", verifyTwitterRoutes);
+app.use("/api", verifyTwitterRoutes(signer));
 
 app.get("/", (_req, res) => {
   res.send("Hello World!");

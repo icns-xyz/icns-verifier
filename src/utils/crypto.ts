@@ -4,7 +4,7 @@ import { sha256 } from "sha.js";
 export class ECDSASigner {
   private signingKey: ec.KeyPair;
 
-  constructor(privateKey: string) {
+  constructor(privateKey: Uint8Array) {
     const context = new ec("secp256k1");
     this.signingKey = context.keyFromPrivate(privateKey);
   }

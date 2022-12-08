@@ -1,10 +1,8 @@
-import assert from "assert";
 import { Request, Response, Router } from "express";
 
 import { ECDSASigner, hashSha256 } from "../utils/crypto";
 import { checkVerified, markAsVerified } from "../utils/db";
 import { getTwitterUsername } from "../utils/twitter";
-const router = Router();
 
 interface VerifierRequestBody {
   msg: string;
@@ -33,11 +31,12 @@ interface VerifierResponseBody {
 
 export async function verifyTwitter(
   reqBody: VerifierRequestBody,
-  verifierPrivateKey: string
+  signer: ECDSASigner
 ): Promise<{ status: number; data: ResponseData | null; errors: string[] }> {
   const { msg, authToken } = reqBody;
   const { name }: RequestMsgFormat = JSON.parse(msg);
 
+  // Normalize base64 padding
   const safeAuthToken = Buffer.from(authToken, "base64").toString("base64");
 
   if (await checkVerified(safeAuthToken)) {
@@ -65,7 +64,6 @@ export async function verifyTwitter(
     };
   }
 
-  const signer = new ECDSASigner(verifierPrivateKey);
   await markAsVerified(safeAuthToken);
 
   return {
@@ -78,28 +76,27 @@ export async function verifyTwitter(
   };
 }
 
-// Verify ownership of a given Twitter name
-router.post(
-  "/verify_twitter",
-  async (
-    req: Request<{}, {}, VerifierRequestBody>,
-    res: Response<VerifierResponseBody>
-  ) => {
-    const { VERIFIER_PRIVATE_KEY } = process.env;
-    assert(
-      VERIFIER_PRIVATE_KEY,
-      "VERIFIER_PRIVATE_KEY must be defined in environment"
-    );
-    try {
-      const { status, data, errors } = await verifyTwitter(
-        req.body,
-        VERIFIER_PRIVATE_KEY
-      );
-      res.status(status).send({ errors, data });
-    } catch (err: any) {
-      res.status(500).send({ errors: [err.toString()], data: null });
-    }
-  }
-);
+export default (signer: ECDSASigner):Router => {
+  const router = Router()
 
-export default router;
+  // Verify ownership of a given Twitter name
+  router.post(
+    "/verify_twitter",
+    async (
+      req: Request<{}, {}, VerifierRequestBody>,
+      res: Response<VerifierResponseBody>
+    ) => {
+      try {
+        const { status, data, errors } = await verifyTwitter(
+          req.body,
+          signer
+        );
+        res.status(status).send({ errors, data });
+      } catch (err: any) {
+        res.status(500).send({ errors: [err.toString()], data: null });
+      }
+    }
+  );
+
+  return router
+}
