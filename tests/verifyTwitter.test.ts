@@ -92,11 +92,11 @@ describe("/verify_twitter", () => {
       signer,
       createAuthTokenMemDB(),
     );
-    expect(response.data.algorithm).toEqual("ecdsa_secp256k1_sha256");
+    expect(response.data?.algorithm).toEqual("ecdsa_secp256k1_sha256");
     // Validate signature
     const context = new ec("secp256k1");
     const verifyingKey = context.keyFromPublic(signer.getSecp256k1PublicKey());
-    const signature = Buffer.from(response.data.signature, "base64");
+    const signature = Buffer.from(response.data?.signature!, "base64");
     expect(
       verifyingKey.verify(hashSha256(request.msg), {
         r: signature.slice(0, 32),

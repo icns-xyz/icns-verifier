@@ -40,6 +40,7 @@
     "twitter-api-sdk": "^1.2.1"
   },
   "scripts": {
+    "build": "tsc",
     "dev": "nodemon",
     "test": "jest",
     "lint": "yarn eslint . --fix --ext .ts,.tsx,.js,.jsx && prettier --write ."
