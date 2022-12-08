@@ -37,10 +37,9 @@ export async function verifyTwitter(
   const { msg, authToken } = reqBody;
   const { name }: RequestMsgFormat = JSON.parse(msg);
 
-  // Normalize base64 padding
-  const safeAuthToken = Buffer.from(authToken, "base64").toString("base64");
-
-  if (await authTokenDB.checkVerified(safeAuthToken)) {
+  // Normalize base64 padding for db key
+  const authTokenForDB = Buffer.from(authToken, "base64").toString("base64");
+  if (await authTokenDB.checkVerified(authTokenForDB)) {
     return {
       status: 403,
       errors: ["authToken has already been verified"],
@@ -48,7 +47,7 @@ export async function verifyTwitter(
     };
   }
 
-  const usernameFromToken = await getTwitterUsername(safeAuthToken);
+  const usernameFromToken = await getTwitterUsername(authToken);
   if (!usernameFromToken) {
     return {
       status: 404,
@@ -65,7 +64,7 @@ export async function verifyTwitter(
     };
   }
 
-  await authTokenDB.markAsVerified(safeAuthToken);
+  await authTokenDB.markAsVerified(authTokenForDB);
 
   return {
     status: 200,
