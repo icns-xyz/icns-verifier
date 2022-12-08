@@ -48,6 +48,6 @@ export class ECDSASigner {
   }
 }
 
-export function hashSha256(message: string) {
+export function hashSha256(message: string | Uint8Array) {
   return new sha256().update(message).digest();
 }
