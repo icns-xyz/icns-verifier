@@ -14,3 +14,9 @@
 
 # LevelsDB
 verifiedAuthTokens/
+
+# OSX
+.DS_Store
+
+# Jetbrain
+.idea
