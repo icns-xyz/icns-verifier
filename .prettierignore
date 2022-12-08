@@ -1,0 +1,11 @@
+.prettierignore
+.gitignore
+
+.yarn
+yarn.lock
+.DS_Store
+
+.pnp.cjs
+.pnp.loader.mjs
+
+.vscode

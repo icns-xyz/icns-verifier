@@ -20,7 +20,7 @@ export async function getTwitterUsername(authToken: string) {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-      }
+      },
     );
     return user.username;
   } catch (err) {

@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 
 import { ECDSASigner, hashSha256 } from "../utils/crypto";
-import {AuthTokenDB} from "../utils/db";
+import { AuthTokenDB } from "../utils/db";
 import { getTwitterUsername } from "../utils/twitter";
 
 interface VerifierRequestBody {
@@ -32,7 +32,7 @@ interface VerifierResponseBody {
 export async function verifyTwitter(
   reqBody: VerifierRequestBody,
   signer: ECDSASigner,
-  authTokenDB:AuthTokenDB,
+  authTokenDB: AuthTokenDB,
 ): Promise<{ status: number; data: ResponseData | null; errors: string[] }> {
   const { msg, authToken } = reqBody;
   const { name }: RequestMsgFormat = JSON.parse(msg);
@@ -71,21 +71,23 @@ export async function verifyTwitter(
     status: 200,
     errors: [],
     data: {
-      signature: Buffer.from(signer.signSecp256k1(hashSha256(msg))).toString("base64"),
+      signature: Buffer.from(signer.signSecp256k1(hashSha256(msg))).toString(
+        "base64",
+      ),
       algorithm: "ecdsa_secp256k1_sha256",
     },
   };
 }
 
-export default (signer: ECDSASigner, authTokenDB: AuthTokenDB):Router => {
-  const router = Router()
+export default (signer: ECDSASigner, authTokenDB: AuthTokenDB): Router => {
+  const router = Router();
 
   // Verify ownership of a given Twitter name
   router.post(
     "/verify_twitter",
     async (
       req: Request<{}, {}, VerifierRequestBody>,
-      res: Response<VerifierResponseBody>
+      res: Response<VerifierResponseBody>,
     ) => {
       try {
         const { status, data, errors } = await verifyTwitter(
@@ -97,8 +99,8 @@ export default (signer: ECDSASigner, authTokenDB: AuthTokenDB):Router => {
       } catch (err: any) {
         res.status(500).send({ errors: [err.toString()], data: null });
       }
-    }
+    },
   );
 
-  return router
-}
+  return router;
+};

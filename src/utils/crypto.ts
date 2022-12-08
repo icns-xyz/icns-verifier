@@ -9,17 +9,17 @@ export class ECDSASigner {
     this.signingKey = context.keyFromPrivate(privateKey);
   }
 
-  signSecp256k1(message: BNInput):Uint8Array {
+  signSecp256k1(message: BNInput): Uint8Array {
     const signature = this.signingKey.sign(message, {
       canonical: true,
     });
 
     return new Uint8Array(
-      signature.r.toArray("be", 32).concat(signature.s.toArray("be", 32))
+      signature.r.toArray("be", 32).concat(signature.s.toArray("be", 32)),
     );
   }
 
-  getSecp256k1PublicKey():Uint8Array {
+  getSecp256k1PublicKey(): Uint8Array {
     // Compressed format is more handy because icns-registrar contract accepts compressed format public key.
     return new Uint8Array(this.signingKey.getPublic().encode("array", true));
   }
