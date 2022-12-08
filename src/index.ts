@@ -4,6 +4,7 @@ require("dotenv").config();
 import express from "express";
 import verifyTwitterRoutes from "./routes/verifyTwitter";
 import { ECDSASigner } from "./utils/crypto";
+import {AuthTokenLevelDB} from "./utils/db";
 
 const { VERIFIER_PRIVATE_KEY } = process.env;
 assert(
@@ -18,7 +19,7 @@ const app = express();
 const port = 8080;
 
 app.use(express.json());
-app.use("/api", verifyTwitterRoutes(signer));
+app.use("/api", verifyTwitterRoutes(signer, AuthTokenLevelDB));
 
 app.get("/", (_req, res) => {
   res.send("Hello World!");

@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 
 import { ECDSASigner, hashSha256 } from "../utils/crypto";
-import { checkVerified, markAsVerified } from "../utils/db";
+import {AuthTokenDB} from "../utils/db";
 import { getTwitterUsername } from "../utils/twitter";
 
 interface VerifierRequestBody {
@@ -31,7 +31,8 @@ interface VerifierResponseBody {
 
 export async function verifyTwitter(
   reqBody: VerifierRequestBody,
-  signer: ECDSASigner
+  signer: ECDSASigner,
+  authTokenDB:AuthTokenDB,
 ): Promise<{ status: number; data: ResponseData | null; errors: string[] }> {
   const { msg, authToken } = reqBody;
   const { name }: RequestMsgFormat = JSON.parse(msg);
@@ -39,7 +40,7 @@ export async function verifyTwitter(
   // Normalize base64 padding
   const safeAuthToken = Buffer.from(authToken, "base64").toString("base64");
 
-  if (await checkVerified(safeAuthToken)) {
+  if (await authTokenDB.checkVerified(safeAuthToken)) {
     return {
       status: 403,
       errors: ["authToken has already been verified"],
@@ -64,7 +65,7 @@ export async function verifyTwitter(
     };
   }
 
-  await markAsVerified(safeAuthToken);
+  await authTokenDB.markAsVerified(safeAuthToken);
 
   return {
     status: 200,
@@ -76,7 +77,7 @@ export async function verifyTwitter(
   };
 }
 
-export default (signer: ECDSASigner):Router => {
+export default (signer: ECDSASigner, authTokenDB: AuthTokenDB):Router => {
   const router = Router()
 
   // Verify ownership of a given Twitter name
@@ -89,7 +90,8 @@ export default (signer: ECDSASigner):Router => {
       try {
         const { status, data, errors } = await verifyTwitter(
           req.body,
-          signer
+          signer,
+          authTokenDB,
         );
         res.status(status).send({ errors, data });
       } catch (err: any) {
