@@ -2,7 +2,7 @@ import { ec } from "elliptic";
 import { verifyTwitter } from "../src/routes/verifyTwitter";
 import {ECDSASigner, hashSha256} from "../src/utils/crypto";
 import { getTwitterUsername } from "../src/utils/twitter";
-import * as process from "process";
+import {createAuthTokenMemDB} from "../src/utils/db";
 
 jest.mock("../src/utils/twitter");
 const getTwitterUsernameMock = getTwitterUsername as jest.MockedFunction<
@@ -19,47 +19,58 @@ function createMockRequest(name: string) {
 
 describe("/verify_twitter", () => {
   const TEST_PRIVATE_KEY = "privateKey"
+  const signer = new ECDSASigner(Buffer.from(TEST_PRIVATE_KEY))
 
   beforeEach(() => {
     jest.resetModules(); // Most important - it clears the cache
-    process.env.VERIFIER_PRIVATE_KEY = TEST_PRIVATE_KEY
   });
 
-  afterAll(() => {
-    // Restore old environment
-    delete process.env.VERIFIER_PRIVATE_KEY
-  });
-
-  it("fails on falsy username", () => {
+  it("fails on falsy username", async () => {
     getTwitterUsernameMock.mockResolvedValueOnce(null);
-    expect(() =>
-      verifyTwitter(createMockRequest("alice"), "privateKey")
-    ).rejects.toThrowError("Twitter user not found.");
+    let data:{ status: number; data: {   signature: string;
+      algorithm: string; } | null; errors: string[] } = await verifyTwitter(createMockRequest("alice"), signer, createAuthTokenMemDB())
+    expect(data).toStrictEqual({
+      status: 404,
+      errors: ["Twitter user not found."],
+      data: null,
+    });
     getTwitterUsernameMock.mockResolvedValueOnce("");
-    expect(() =>
-      verifyTwitter(createMockRequest("alice"), "privateKey")
-    ).rejects.toThrowError("Twitter user not found.");
+    data = await verifyTwitter(createMockRequest("alice"), signer, createAuthTokenMemDB());
+    expect(data).toStrictEqual({
+      status: 404,
+      errors: ["Twitter user not found."],
+      data: null,
+    })
     getTwitterUsernameMock.mockResolvedValueOnce(undefined!);
-    expect(() =>
-      verifyTwitter(createMockRequest("alice"), "privateKey")
-    ).rejects.toThrowError("Twitter user not found.");
+    data = await verifyTwitter(createMockRequest("alice"), signer, createAuthTokenMemDB());
+    expect(data).toStrictEqual({
+      status: 404,
+      errors: ["Twitter user not found."],
+      data: null,
+    })
   });
 
-  it("fails on mismatched username", () => {
+  it("fails on mismatched username", async () => {
     getTwitterUsernameMock.mockResolvedValueOnce("bob");
-    expect(() =>
-      verifyTwitter(createMockRequest("alice"), "privateKey")
-    ).rejects.toThrowError("Claimer address or name does not match.");
+    let data:{ status: number; data: {   signature: string;
+        algorithm: string; } | null; errors: string[] } = await verifyTwitter(createMockRequest("alice"), signer, createAuthTokenMemDB())
+    expect(
+        data
+    ).toStrictEqual({
+      status: 400,
+      errors: ["Claimer address or name does not match."],
+      data: null,
+    })
   });
 
   it("successfully signs msg if verified", async () => {
     getTwitterUsernameMock.mockResolvedValueOnce("alice");
     const request = createMockRequest("alice");
-    const response = await verifyTwitter(request, TEST_PRIVATE_KEY);
+    const response = await verifyTwitter(request, signer, createAuthTokenMemDB());
     expect(response.data.algorithm).toEqual("ecdsa_secp256k1_sha256");
     // Validate signature
     const context = new ec("secp256k1");
-    const verifyingKey = context.keyFromPublic(new ECDSASigner(process.env.VERIFIER_PRIVATE_KEY).getSecp256k1PublicKey());
+    const verifyingKey = context.keyFromPublic(signer.getSecp256k1PublicKey());
     const signature = Buffer.from(response.data.signature, "base64");
     expect(
       verifyingKey.verify(hashSha256(request.msg), {
