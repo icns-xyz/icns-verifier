@@ -22,7 +22,8 @@ interface RequestMsgFormat {
 }
 
 interface ResponseData {
-  signature: number[];
+  // Base64 encoded
+  signature: string;
   algorithm: string;
 }
 interface VerifierResponseBody {
@@ -71,7 +72,7 @@ export async function verifyTwitter(
     status: 200,
     errors: [],
     data: {
-      signature: signer.signSecp256k1(hashSha256(msg)),
+      signature: Buffer.from(signer.signSecp256k1(hashSha256(msg))).toString("base64"),
       algorithm: "ecdsa_secp256k1_sha256",
     },
   };

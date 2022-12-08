@@ -1,7 +1,8 @@
 import { ec } from "elliptic";
 import { verifyTwitter } from "../src/routes/verifyTwitter";
-import { hashSha256 } from "../src/utils/crypto";
+import {ECDSASigner, hashSha256} from "../src/utils/crypto";
 import { getTwitterUsername } from "../src/utils/twitter";
+import * as process from "process";
 
 jest.mock("../src/utils/twitter");
 const getTwitterUsernameMock = getTwitterUsername as jest.MockedFunction<
@@ -17,15 +18,16 @@ function createMockRequest(name: string) {
 }
 
 describe("/verify_twitter", () => {
-  const OLD_ENV = process.env;
+  const TEST_PRIVATE_KEY = "privateKey"
 
   beforeEach(() => {
     jest.resetModules(); // Most important - it clears the cache
-    process.env = { ...OLD_ENV, VERIFIER_PRIVATE_KEY: "privateKey" }; // Make a copy
+    process.env.VERIFIER_PRIVATE_KEY = TEST_PRIVATE_KEY
   });
 
   afterAll(() => {
-    process.env = OLD_ENV; // Restore old environment
+    // Restore old environment
+    delete process.env.VERIFIER_PRIVATE_KEY
   });
 
   it("fails on falsy username", () => {
@@ -51,16 +53,19 @@ describe("/verify_twitter", () => {
   });
 
   it("successfully signs msg if verified", async () => {
-    process.env.VERIFIER_PRIVATE_KEY = "privateKey";
     getTwitterUsernameMock.mockResolvedValueOnce("alice");
     const request = createMockRequest("alice");
-    const response = await verifyTwitter(request, "privateKey");
-    expect(response.algorithm).toEqual("ecdsa_secp256k1_sha256");
+    const response = await verifyTwitter(request, TEST_PRIVATE_KEY);
+    expect(response.data.algorithm).toEqual("ecdsa_secp256k1_sha256");
     // Validate signature
     const context = new ec("secp256k1");
-    const verifyingKey = context.keyFromPublic(response.publicKey);
+    const verifyingKey = context.keyFromPublic(new ECDSASigner(process.env.VERIFIER_PRIVATE_KEY).getSecp256k1PublicKey());
+    const signature = Buffer.from(response.data.signature, "base64");
     expect(
-      verifyingKey.verify(hashSha256(request.msg), response.signature)
+      verifyingKey.verify(hashSha256(request.msg), {
+        r: signature.slice(0, 32),
+        s: signature.slice(32)
+      })
     ).toBe(true);
   });
 });
