@@ -1,6 +1,29 @@
 import { BNInput, ec } from "elliptic";
 import { sha256 } from "sha.js";
 
+const bip32 = require("bip32");
+const bip39 = require("bip39");
+
+export function createECDSASignerFromMnemonic(
+  mnemonic: string,
+  path: string = `m/44'/118'/0'/0/0`,
+  password: string = "",
+): ECDSASigner {
+  if (!bip39.validateMnemonic(mnemonic)) {
+    throw new Error("Invalid mnemonic");
+  }
+
+  const seed = bip39.mnemonicToSeedSync(mnemonic, password);
+  const masterSeed = bip32.fromSeed(seed);
+  const hd = masterSeed.derivePath(path);
+
+  const privateKey = hd.privateKey;
+  if (!privateKey) {
+    throw new Error("null hd key");
+  }
+  return new ECDSASigner(privateKey);
+}
+
 export class ECDSASigner {
   private signingKey: ec.KeyPair;
 

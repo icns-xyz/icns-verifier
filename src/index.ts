@@ -1,19 +1,19 @@
-import assert from "assert";
 import express from "express";
+import * as process from "process";
 
 import verifyTwitterRoutes from "./routes/verifyTwitter";
-import { ECDSASigner } from "./utils/crypto";
+import { createECDSASignerFromMnemonic } from "./utils/crypto";
 import { AuthTokenLevelDB } from "./utils/db";
 
 require("dotenv").config();
 
-const { VERIFIER_PRIVATE_KEY } = process.env;
-assert(
-  VERIFIER_PRIVATE_KEY,
-  "VERIFIER_PRIVATE_KEY must be defined in environment",
-);
+const { VERIFIER_MNEMONIC } = process.env;
+if (!VERIFIER_MNEMONIC) {
+  console.log("VERIFIER_MNEMONIC must be defined in environment");
+  process.exit(1);
+}
 
-const signer = new ECDSASigner(Buffer.from(VERIFIER_PRIVATE_KEY));
+const signer = createECDSASignerFromMnemonic(VERIFIER_MNEMONIC);
 console.log(
   "Your Pubkey is:",
   Buffer.from(signer.getSecp256k1PublicKey()).toString("base64"),
