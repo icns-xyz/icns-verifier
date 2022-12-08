@@ -3,7 +3,7 @@ import * as process from "process";
 
 import verifyTwitterRoutes from "./routes/verifyTwitter";
 import { createECDSASignerFromMnemonic } from "./utils/crypto";
-import { AuthTokenLevelDB } from "./utils/db";
+import { createAuthTokenLevelDB } from "./utils/db";
 
 require("dotenv").config();
 
@@ -23,7 +23,10 @@ const app = express();
 const port = 8080;
 
 app.use(express.json());
-app.use("/api", verifyTwitterRoutes(signer, AuthTokenLevelDB));
+app.use(
+  "/api",
+  verifyTwitterRoutes(signer, createAuthTokenLevelDB("~/.icns-verifier")),
+);
 
 app.get("/", (_req, res) => {
   res.send("Hello World!");
