@@ -1,5 +1,5 @@
 import express from "express";
-import * as process from "process";
+import process from "process";
 
 import verifyTwitterRoutes from "./routes/verifyTwitter";
 import { createECDSASignerFromMnemonic } from "./utils/crypto";
