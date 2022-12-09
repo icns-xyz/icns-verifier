@@ -15,7 +15,7 @@ export function createAuthTokenLevelDB(path: string): AuthTokenDB {
     path = Path.join(os.homedir(), ...paths.slice(1));
   }
 
-  path = Path.resolve(path, "data");
+  path = Path.resolve(path, "auth_token");
 
   if (!Path.isAbsolute(path)) {
     throw new Error(`Please provide absolute path for DB: ${path}`);
