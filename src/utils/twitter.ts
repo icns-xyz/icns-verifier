@@ -11,9 +11,7 @@ const CURRENT_TWITTER_USER_URL = "https://api.twitter.com/2/users/me";
 
 export async function getTwitterUsername(authToken: string) {
   try {
-    const {
-      body: { data: user },
-    }: { body: { data: TwitterUser } } = await needle(
+    const res: { body: { data: TwitterUser } } = await needle(
       "get",
       CURRENT_TWITTER_USER_URL,
       {
@@ -22,7 +20,8 @@ export async function getTwitterUsername(authToken: string) {
         },
       },
     );
-    return user.username;
+    console.log(res);
+    return res.body.data.username;
   } catch (err) {
     console.error("Could not get Twitter username.", { err });
     return null;
