@@ -1,3 +1,4 @@
+import { program } from "commander";
 import express from "express";
 import process from "process";
 
@@ -5,15 +6,33 @@ import verifyTwitterRoutes from "./routes/verifyTwitter";
 import { createECDSASignerFromMnemonic } from "./utils/crypto";
 import { createAuthTokenLevelDB } from "./utils/db";
 
-require("dotenv").config();
+program
+  .option("--mnemonic [words]", "Verifier mnemonic")
+  .option(
+    "--path [path]",
+    "Path where DB data or config will be located (default: ~/.icns-verifier)",
+    "~/.icns-verifier",
+  );
 
-const { VERIFIER_MNEMONIC } = process.env;
-if (!VERIFIER_MNEMONIC) {
-  console.log("VERIFIER_MNEMONIC must be defined in environment");
-  process.exit(1);
-}
+program.parse();
 
-const signer = createECDSASignerFromMnemonic(VERIFIER_MNEMONIC);
+const options = program.opts();
+const mnemonic = ((): string => {
+  if (options.mnemonic) {
+    return options.mnemonic;
+  }
+
+  const { VERIFIER_MNEMONIC } = process.env;
+  if (!VERIFIER_MNEMONIC) {
+    console.log(
+      "mnemonic must be defined in argument(--mnemonic) or environment(VERIFIER_MNEMONIC)",
+    );
+    process.exit(1);
+  }
+  return VERIFIER_MNEMONIC;
+})();
+
+const signer = createECDSASignerFromMnemonic(mnemonic);
 console.log(
   "Your Pubkey is:",
   Buffer.from(signer.getSecp256k1PublicKey()).toString("base64"),
@@ -25,7 +44,7 @@ const port = 8080;
 app.use(express.json());
 app.use(
   "/api",
-  verifyTwitterRoutes(signer, createAuthTokenLevelDB("~/.icns-verifier")),
+  verifyTwitterRoutes(signer, createAuthTokenLevelDB(options.path)),
 );
 
 app.get("/", (_req, res) => {

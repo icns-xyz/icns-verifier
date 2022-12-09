@@ -46,7 +46,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["bip32", "npm:2.0.6"],\
             ["bip39", "npm:3.0.4"],\
             ["commander", "npm:9.4.1"],\
-            ["dotenv", "npm:16.0.3"],\
             ["elliptic", "npm:6.5.4"],\
             ["eslint", "npm:8.29.0"],\
             ["eslint-config-prettier", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:8.5.0"],\
@@ -3749,15 +3748,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["dotenv", [\
-        ["npm:16.0.3", {\
-          "packageLocation": "./.yarn/cache/dotenv-npm-16.0.3-4cc29121dc-afcf03f373.zip/node_modules/dotenv/",\
-          "packageDependencies": [\
-            ["dotenv", "npm:16.0.3"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["ee-first", [\
         ["npm:1.1.1", {\
           "packageLocation": "./.yarn/cache/ee-first-npm-1.1.1-33f8535b39-1b4cac778d.zip/node_modules/ee-first/",\
@@ -5083,7 +5073,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["bip32", "npm:2.0.6"],\
             ["bip39", "npm:3.0.4"],\
             ["commander", "npm:9.4.1"],\
-            ["dotenv", "npm:16.0.3"],\
             ["elliptic", "npm:6.5.4"],\
             ["eslint", "npm:8.29.0"],\
             ["eslint-config-prettier", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:8.5.0"],\
