@@ -8,6 +8,7 @@ import { createAuthTokenLevelDB } from "./utils/db";
 
 program
   .option("--mnemonic [words]", "Verifier mnemonic")
+  .option("--port [number]", "Port to open", "8080")
   .option(
     "--path [path]",
     "Path where DB data or config will be located (default: ~/.icns-verifier)",
@@ -31,6 +32,13 @@ const mnemonic = ((): string => {
   }
   return VERIFIER_MNEMONIC;
 })();
+const port = ((): number => {
+  const num = Number.parseInt(options.port);
+  if (num.toString() !== options.port) {
+    throw new Error("Invalid port");
+  }
+  return num;
+})();
 
 const signer = createECDSASignerFromMnemonic(mnemonic);
 console.log(
@@ -39,7 +47,6 @@ console.log(
 );
 
 const app = express();
-const port = 8080;
 
 app.use(express.json());
 app.use(
