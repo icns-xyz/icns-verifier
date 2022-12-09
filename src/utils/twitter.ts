@@ -7,9 +7,22 @@ interface TwitterUser {
   username: string;
 }
 
+interface TwitterVerifyingMsg {
+  unique_twitter_id: string;
+  name: string;
+  claimer: string;
+  contract_address: string;
+  chain_id: string;
+}
+
 const CURRENT_TWITTER_USER_URL = "https://api.twitter.com/2/users/me";
 
-export async function getTwitterUsername(authToken: string) {
+export async function getTwitterVerifyingMsg(
+  authToken: string,
+  claimer: string,
+  chainId: string,
+  contractAddress: string,
+): Promise<TwitterVerifyingMsg | null> {
   try {
     const res: { body: { data: TwitterUser } } = await needle(
       "get",
@@ -20,10 +33,16 @@ export async function getTwitterUsername(authToken: string) {
         },
       },
     );
-    console.log(res);
-    return res.body.data.username;
+    console.log("Twitter res:", res);
+    return {
+      unique_twitter_id: res.body.data.id,
+      name: res.body.data.username,
+      claimer,
+      contract_address: contractAddress,
+      chain_id: chainId,
+    };
   } catch (err) {
-    console.error("Could not get Twitter username.", { err });
+    console.error("Could not get Twitter res", { err });
     return null;
   }
 }

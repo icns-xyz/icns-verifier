@@ -8,12 +8,14 @@ import { createAuthTokenLevelDB } from "./utils/db";
 
 program
   .option("--mnemonic [words]", "Verifier mnemonic")
-  .option("--port [number]", "Port to open", "8080")
+  .option("--port [number]", "Port to open (default: 8080)", "8080")
   .option(
     "--path [path]",
     "Path where DB data or config will be located (default: ~/.icns-verifier)",
     "~/.icns-verifier",
-  );
+  )
+  .requiredOption("--chain-id <value>")
+  .requiredOption("--contract-address <address>");
 
 program.parse();
 
@@ -51,7 +53,12 @@ const app = express();
 app.use(express.json());
 app.use(
   "/api",
-  verifyTwitterRoutes(signer, createAuthTokenLevelDB(options.path)),
+  verifyTwitterRoutes(
+    signer,
+    createAuthTokenLevelDB(options.path),
+    options.chainId,
+    options.contractAddress,
+  ),
 );
 
 app.get("/", (_req, res) => {

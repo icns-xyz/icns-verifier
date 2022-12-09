@@ -2,24 +2,18 @@ import { Request, Response, Router } from "express";
 
 import { ECDSASigner, hashSha256 } from "../utils/crypto";
 import { AuthTokenDB } from "../utils/db";
-import { getTwitterUsername } from "../utils/twitter";
+import { getTwitterVerifyingMsg } from "../utils/twitter";
 
 interface VerifierRequestBody {
-  msg: string;
+  claimer: string;
   // OAuth 2.0 user access token fetched from Twitter
   // https://developer.twitter.com/en/docs/authentication/oauth-2-0/user-access-token
   authToken: string;
 }
 
-interface RequestMsgFormat {
-  unique_twitter_id: string;
-  name: string;
-  claimer: string;
-  contract_address: string;
-  chain_id: string;
-}
-
 interface ResponseData {
+  // JSON string
+  verifying_msg: string;
   // Base64 encoded
   signature: string;
   algorithm: string;
@@ -33,9 +27,10 @@ export async function verifyTwitter(
   reqBody: VerifierRequestBody,
   signer: ECDSASigner,
   authTokenDB: AuthTokenDB,
+  chainId: string,
+  contractAddress: string,
 ): Promise<{ status: number; data: ResponseData | null; errors: string[] }> {
-  const { msg, authToken } = reqBody;
-  const { name }: RequestMsgFormat = JSON.parse(msg);
+  const { authToken } = reqBody;
 
   // Normalize base64 padding for db key
   const authTokenForDB = Buffer.from(authToken, "base64").toString("base64");
@@ -47,8 +42,13 @@ export async function verifyTwitter(
     };
   }
 
-  const usernameFromToken = await getTwitterUsername(authToken);
-  if (!usernameFromToken) {
+  const verifyingMsg = await getTwitterVerifyingMsg(
+    authToken,
+    reqBody.claimer,
+    chainId,
+    contractAddress,
+  );
+  if (!verifyingMsg) {
     return {
       status: 404,
       errors: ["Twitter user not found."],
@@ -56,29 +56,29 @@ export async function verifyTwitter(
     };
   }
 
-  if (usernameFromToken !== name) {
-    return {
-      status: 400,
-      errors: ["Claimer address or name does not match."],
-      data: null,
-    };
-  }
-
   await authTokenDB.markAsVerified(authTokenForDB);
+
+  const verifyingMsgStr = JSON.stringify(verifyingMsg);
 
   return {
     status: 200,
     errors: [],
     data: {
-      signature: Buffer.from(signer.signSecp256k1(hashSha256(msg))).toString(
-        "base64",
-      ),
+      verifying_msg: verifyingMsgStr,
+      signature: Buffer.from(
+        signer.signSecp256k1(hashSha256(verifyingMsgStr)),
+      ).toString("base64"),
       algorithm: "ecdsa_secp256k1_sha256",
     },
   };
 }
 
-export default (signer: ECDSASigner, authTokenDB: AuthTokenDB): Router => {
+export default (
+  signer: ECDSASigner,
+  authTokenDB: AuthTokenDB,
+  chainId: string,
+  contractAddress: string,
+): Router => {
   const router = Router();
 
   // Verify ownership of a given Twitter name
@@ -93,6 +93,8 @@ export default (signer: ECDSASigner, authTokenDB: AuthTokenDB): Router => {
           req.body,
           signer,
           authTokenDB,
+          chainId,
+          contractAddress,
         );
         res.status(status).send({ errors, data });
       } catch (err: any) {
