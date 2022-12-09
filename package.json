@@ -41,6 +41,9 @@
     "sha.js": "2.4.9",
     "twitter-api-sdk": "^1.2.1"
   },
+  "bin": {
+    "icns-verifier": "./build/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "ts-node ./src/index.ts",
