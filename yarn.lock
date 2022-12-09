@@ -2516,6 +2516,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^9.4.1":
+  version: 9.4.1
+  resolution: "commander@npm:9.4.1"
+  checksum: bfb18e325a5bdf772763c2213d5c7d9e77144d944124e988bcd8e5e65fb6d45d5d4e86b09155d0f2556c9a59c31e428720e57968bcd050b2306e910a0bf3cf13
+  languageName: node
+  linkType: hard
+
 "common-tags@npm:^1.8.0":
   version: 1.8.2
   resolution: "common-tags@npm:1.8.2"
@@ -3892,6 +3899,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.46.0
     bip32: ^2.0.6
     bip39: ^3.0.4
+    commander: ^9.4.1
     dotenv: ^16.0.3
     elliptic: ^6.5.4
     eslint: ^8.29.0

@@ -45,6 +45,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:5.46.0"],\
             ["bip32", "npm:2.0.6"],\
             ["bip39", "npm:3.0.4"],\
+            ["commander", "npm:9.4.1"],\
             ["dotenv", "npm:16.0.3"],\
             ["elliptic", "npm:6.5.4"],\
             ["eslint", "npm:8.29.0"],\
@@ -3374,6 +3375,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["commander", [\
+        ["npm:9.4.1", {\
+          "packageLocation": "./.yarn/cache/commander-npm-9.4.1-9deffb2749-bfb18e325a.zip/node_modules/commander/",\
+          "packageDependencies": [\
+            ["commander", "npm:9.4.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["common-tags", [\
         ["npm:1.8.2", {\
           "packageLocation": "./.yarn/cache/common-tags-npm-1.8.2-2c30ba69b3-767a6255a8.zip/node_modules/common-tags/",\
@@ -5072,6 +5082,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:5.46.0"],\
             ["bip32", "npm:2.0.6"],\
             ["bip39", "npm:3.0.4"],\
+            ["commander", "npm:9.4.1"],\
             ["dotenv", "npm:16.0.3"],\
             ["elliptic", "npm:6.5.4"],\
             ["eslint", "npm:8.29.0"],\
