@@ -17,6 +17,10 @@ export function createAuthTokenLevelDB(path: string): AuthTokenDB {
 
   path = Path.resolve(path, "data");
 
+  if (!Path.isAbsolute(path)) {
+    throw new Error(`Please provide absolute path for DB: ${path}`);
+  }
+
   const db = new Level(path, {
     valueEncoding: "json",
   });
