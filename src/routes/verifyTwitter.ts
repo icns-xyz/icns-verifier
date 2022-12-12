@@ -15,6 +15,8 @@ interface ResponseData {
   // JSON string
   verifying_msg: string;
   // Base64 encoded
+  public_key: string;
+  // Base64 encoded
   signature: string;
   algorithm: string;
 }
@@ -65,6 +67,9 @@ export async function verifyTwitter(
     errors: [],
     data: {
       verifying_msg: verifyingMsgStr,
+      public_key: Buffer.from(signer.getSecp256k1PublicKey()).toString(
+        "base64",
+      ),
       signature: Buffer.from(
         signer.signSecp256k1(hashSha256(verifyingMsgStr)),
       ).toString("base64"),
