@@ -33,6 +33,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/encoding", "npm:0.29.3"],\
             ["@cosmjs/math", "npm:0.29.3"],\
             ["@trivago/prettier-plugin-sort-imports", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:4.0.0"],\
+            ["@types/cors", "npm:2.8.13"],\
             ["@types/elliptic", "npm:6.4.14"],\
             ["@types/eslint", "npm:8.4.10"],\
             ["@types/express", "npm:4.17.14"],\
@@ -46,6 +47,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["bip32", "npm:2.0.6"],\
             ["bip39", "npm:3.0.4"],\
             ["commander", "npm:9.4.1"],\
+            ["cors", "npm:2.8.5"],\
             ["elliptic", "npm:6.5.4"],\
             ["eslint", "npm:8.29.0"],\
             ["eslint-config-prettier", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:8.5.0"],\
@@ -1932,6 +1934,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/cors", [\
+        ["npm:2.8.13", {\
+          "packageLocation": "./.yarn/cache/@types-cors-npm-2.8.13-4b8ac1068f-7ef197ea19.zip/node_modules/@types/cors/",\
+          "packageDependencies": [\
+            ["@types/cors", "npm:2.8.13"],\
+            ["@types/node", "npm:18.11.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/elliptic", [\
         ["npm:6.4.14", {\
           "packageLocation": "./.yarn/cache/@types-elliptic-npm-6.4.14-77735f3256-d5a64f540e.zip/node_modules/@types/elliptic/",\
@@ -3459,6 +3471,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/cookie-signature-npm-1.0.6-93f325f7f0-f4e1b0a98a.zip/node_modules/cookie-signature/",\
           "packageDependencies": [\
             ["cookie-signature", "npm:1.0.6"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["cors", [\
+        ["npm:2.8.5", {\
+          "packageLocation": "./.yarn/cache/cors-npm-2.8.5-c9935a2d12-ced838404c.zip/node_modules/cors/",\
+          "packageDependencies": [\
+            ["cors", "npm:2.8.5"],\
+            ["object-assign", "npm:4.1.1"],\
+            ["vary", "npm:1.1.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5060,6 +5083,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@cosmjs/encoding", "npm:0.29.3"],\
             ["@cosmjs/math", "npm:0.29.3"],\
             ["@trivago/prettier-plugin-sort-imports", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:4.0.0"],\
+            ["@types/cors", "npm:2.8.13"],\
             ["@types/elliptic", "npm:6.4.14"],\
             ["@types/eslint", "npm:8.4.10"],\
             ["@types/express", "npm:4.17.14"],\
@@ -5073,6 +5097,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["bip32", "npm:2.0.6"],\
             ["bip39", "npm:3.0.4"],\
             ["commander", "npm:9.4.1"],\
+            ["cors", "npm:2.8.5"],\
             ["elliptic", "npm:6.5.4"],\
             ["eslint", "npm:8.29.0"],\
             ["eslint-config-prettier", "virtual:dd2c6d152d87ce5439df50a8f7b798b9902de8c6c4982e64e5f70207fbfa43bae60d255ed14642134a1c7f4d0b42b6cd3edb71506b4f539f6443891af3573d9b#npm:8.5.0"],\
@@ -6900,6 +6925,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["console-control-strings", "npm:1.1.0"],\
             ["gauge", "npm:4.0.4"],\
             ["set-blocking", "npm:2.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["object-assign", [\
+        ["npm:4.1.1", {\
+          "packageLocation": "./.yarn/cache/object-assign-npm-4.1.1-1004ad6dec-fcc6e4ea8c.zip/node_modules/object-assign/",\
+          "packageDependencies": [\
+            ["object-assign", "npm:4.1.1"]\
           ],\
           "linkType": "HARD"\
         }]\

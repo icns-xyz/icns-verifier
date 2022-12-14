@@ -1,4 +1,5 @@
 import { program } from "commander";
+import cors from "cors";
 import express from "express";
 import process from "process";
 
@@ -14,6 +15,7 @@ program
     "Path where DB data or config will be located (default: ~/.icns-verifier)",
     "~/.icns-verifier",
   )
+  .option("--cors [enabled]", "Enable cors (default: true)", true)
   .requiredOption("--chain-id <value>")
   .requiredOption("--contract-address <address>");
 
@@ -49,6 +51,11 @@ console.log(
 );
 
 const app = express();
+
+if (options.cors === true || options.cors === "true") {
+  console.log("CORS enabled");
+  app.use(cors());
+}
 
 app.use(express.json());
 app.use(
