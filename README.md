@@ -2,36 +2,29 @@
 
 ## Testing
 
-```
+```bash
 yarn
 yarn test
 ```
 
-## Development
+## CLI
 
-Add an `.env` file and fill the following variables or manually add them in your terminal.
-
-```
-VERIFIER_PRIVATE_KEY=...
-```
-
-Run the development server:
-
+Run the production server:
 ```bash
 yarn
-yarn dev
+yarn start --mnemonic "{YOUR_MNEMONIC}" --chain-id {CHAIN_ID} --contract-address {CONTRACT_ADDRESS}
 ```
 
-And you can query `POST http://localhost:8080/api/verify_twitter` to verify the given request.
-
-e.g.:
-
+Run the development server with live reload:
 ```bash
-curl -X POST http://localhost:8080/api/verify_twitter \
-   -H 'Content-Type: application/json' \
-   -d '{"authToken":"<Twitter-OAuth2-token>","msg":"{\"name\":\"elonmusk\",\"claimer\":\"<Osmosis-address>\"}"}'
+yarn
+yarn dev -- --mnemonic "{YOUR_MNEMONIC}" --chain-id {CHAIN_ID} --contract-address {CONTRACT_ADDRESS}
 ```
-
-## Production
-
-coming soon!
+  
+Alternatively, you can pass mnemonic by setting environment variable [VERIFIER_MNEMONIC]  
+  
+Other flags:
+```bash
+yarn
+yarn start --help
+```
