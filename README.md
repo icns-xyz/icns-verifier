@@ -13,14 +13,15 @@ Run the production server:
 
 ```bash
 yarn
-yarn start --mnemonic "{YOUR_MNEMONIC}" --chain-id {CHAIN_ID} --contract-address {CONTRACT_ADDRESS}
+yarn build
+yarn start --mnemonic "{YOUR_MNEMONIC}" --chain-id {OSMOSIS_CHAIN_ID} --contract-address {ICNS_RESOLVER_CONTRACT_ADDRESS}
 ```
 
 Run the development server with live reload:
 
 ```bash
 yarn
-yarn dev -- --mnemonic "{YOUR_MNEMONIC}" --chain-id {CHAIN_ID} --contract-address {CONTRACT_ADDRESS}
+yarn dev -- --mnemonic "{YOUR_MNEMONIC}" --chain-id {OSMOSIS_CHAIN_ID} --contract-address {ICNS_RESOLVER_CONTRACT_ADDRESS}
 ```
 
 Alternatively, you can pass mnemonic by setting environment variable [VERIFIER_MNEMONIC]
@@ -38,5 +39,5 @@ Run the docker image for the production server:
 
 ```bash
 docker build -t "{YOUR_IMAGE_NAME}" .
-docker run {YOUR_IMAGE_NAME} --mnemonic "{YOUR_MNEMONIC}" --chain-id {CHAIN_ID} --contract-address {CONTRACT_ADDRESS}
+docker run {YOUR_IMAGE_NAME} --mnemonic "{YOUR_MNEMONIC}" --chain-id {OSMOSIS_CHAIN_ID} --contract-address {ICNS_RESOLVER_CONTRACT_ADDRESS}
 ```
