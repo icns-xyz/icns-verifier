@@ -38,6 +38,6 @@ yarn start --help
 Run the docker image for the production server:
 
 ```bash
-docker build -t "{YOUR_IMAGE_NAME}" .
-docker run {YOUR_IMAGE_NAME} --mnemonic "{YOUR_MNEMONIC}" --chain-id {OSMOSIS_CHAIN_ID} --contract-address {ICNS_RESOLVER_CONTRACT_ADDRESS}
+docker build -t {YOUR_IMAGE_NAME} .
+docker run -v {PATH_YOU_WANT_TO_STORE_DATA}:/data {YOUR_IMAGE_NAME}  --mnemonic "{YOUR_MNEMONIC}" --chain-id {OSMOSIS_CHAIN_ID} --contract-address {ICNS_RESOLVER_CONTRACT_ADDRESS}
 ```
