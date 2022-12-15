@@ -1,0 +1,16 @@
+.editorconfig
+.vscode/
+
+.eslintrc.js
+.prettierignore
+.gitignore
+
+Dockerfile
+
+jest.config.js
+
+nodemon.json
+
+README.md
+
+tests/

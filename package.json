@@ -48,7 +48,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "ts-node ./src/index.ts",
+    "start": "node ./build/index.js",
     "dev": "nodemon",
     "test": "jest",
     "lint": "yarn eslint . --fix --ext .ts,.tsx,.js,.jsx && prettier --write ."
