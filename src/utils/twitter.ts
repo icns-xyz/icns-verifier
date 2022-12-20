@@ -22,23 +22,25 @@ export async function getTwitterVerifyingMsg(
   contractAddress: string,
 ): Promise<TwitterVerifyingMsg | null> {
   try {
-    const res = await fetch(CURRENT_TWITTER_USER_URL, {
+    const fetched = await fetch(CURRENT_TWITTER_USER_URL, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
     });
 
-    if (!res.ok || res.status !== 200) {
-      console.error(res);
+    if (!fetched.ok || fetched.status !== 200) {
+      console.error(fetched);
       throw new Error("Failed to fetch twitter user info");
     }
 
-    const data: TwitterUser = await res.json();
+    const res: {
+      data: TwitterUser;
+    } = await fetched.json();
 
-    console.log("Twitter res:", data);
+    console.log("Twitter res:", res);
     return {
-      unique_twitter_id: data.id,
-      name: data.username,
+      unique_twitter_id: res.data.id,
+      name: res.data.username,
       claimer,
       contract_address: contractAddress,
       chain_id: chainId,
