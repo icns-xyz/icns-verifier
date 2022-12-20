@@ -44,6 +44,14 @@ export async function verifyTwitter(
     };
   }
 
+  if (!reqBody.claimer) {
+    return {
+      status: 400,
+      errors: ["claimer is null"],
+      data: null,
+    };
+  }
+
   const verifyingMsg = await getTwitterVerifyingMsg(
     authToken,
     reqBody.claimer,
