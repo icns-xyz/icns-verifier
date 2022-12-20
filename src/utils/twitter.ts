@@ -1,5 +1,3 @@
-const needle = require("needle");
-
 interface TwitterUser {
   created_at?: string;
   id: string;
@@ -24,19 +22,23 @@ export async function getTwitterVerifyingMsg(
   contractAddress: string,
 ): Promise<TwitterVerifyingMsg | null> {
   try {
-    const res: { body: { data: TwitterUser } } = await needle(
-      "get",
-      CURRENT_TWITTER_USER_URL,
-      {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+    const res = await fetch(CURRENT_TWITTER_USER_URL, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
       },
-    );
-    console.log("Twitter res:", res);
+    });
+
+    if (!res.ok || res.status !== 200) {
+      console.error(res);
+      throw new Error("Failed to fetch twitter user info");
+    }
+
+    const data: TwitterUser = await res.json();
+
+    console.log("Twitter res:", data);
     return {
-      unique_twitter_id: res.body.data.id,
-      name: res.body.data.username,
+      unique_twitter_id: data.id,
+      name: data.username,
       claimer,
       contract_address: contractAddress,
       chain_id: chainId,

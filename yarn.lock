@@ -1506,15 +1506,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/needle@npm:^2.5.3":
-  version: 2.5.3
-  resolution: "@types/needle@npm:2.5.3"
-  dependencies:
-    "@types/node": "*"
-  checksum: d3bf1d456be52f974ed204e06a9fa98c82480f1fa715e8c5944000277d64d5fd16fad9634272ce6c666846bc6892f5839084f923bde58cb2243e4fbab35cb276
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:*, @types/node@npm:>=13.7.0, @types/node@npm:^18.11.9":
   version: 18.11.9
   resolution: "@types/node@npm:18.11.9"
@@ -2683,7 +2674,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:^3.2.6, debug@npm:^3.2.7":
+"debug@npm:^3.2.7":
   version: 3.2.7
   resolution: "debug@npm:3.2.7"
   dependencies:
@@ -3904,7 +3895,6 @@ __metadata:
     "@types/eslint": ^8.4.10
     "@types/express": ^4
     "@types/jest": ^29.2.3
-    "@types/needle": ^2.5.3
     "@types/node": ^18.11.9
     "@types/prettier": ^2
     "@types/sha.js": ^2
@@ -3923,7 +3913,6 @@ __metadata:
     express: ^4.18.2
     jest: ^29.3.1
     level: ^8.0.0
-    needle: ^3.1.0
     nodemon: ^2.0.20
     prettier: ^2.8.1
     sha.js: 2.4.9
@@ -3945,7 +3934,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"iconv-lite@npm:^0.6.2, iconv-lite@npm:^0.6.3":
+"iconv-lite@npm:^0.6.2":
   version: 0.6.3
   resolution: "iconv-lite@npm:0.6.3"
   dependencies:
@@ -5344,19 +5333,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"needle@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "needle@npm:3.1.0"
-  dependencies:
-    debug: ^3.2.6
-    iconv-lite: ^0.6.3
-    sax: ^1.2.4
-  bin:
-    needle: bin/needle
-  checksum: 662c8a019d0b2b30137f43e1641aa03d96f9da7ce0d3951af8d6d23c1526c123a992d82fcf9f4e68cba6a52e361a7decfb2c71a56cc0e60230248e5a3520f6ad
-  languageName: node
-  linkType: hard
-
 "negotiator@npm:0.6.3, negotiator@npm:^0.6.3":
   version: 0.6.3
   resolution: "negotiator@npm:0.6.3"
@@ -6102,13 +6078,6 @@ __metadata:
   version: 2.1.2
   resolution: "safer-buffer@npm:2.1.2"
   checksum: cab8f25ae6f1434abee8d80023d7e72b598cf1327164ddab31003c51215526801e40b66c5e65d658a0af1e9d6478cadcb4c745f4bd6751f97d8644786c0978b0
-  languageName: node
-  linkType: hard
-
-"sax@npm:^1.2.4":
-  version: 1.2.4
-  resolution: "sax@npm:1.2.4"
-  checksum: d3df7d32b897a2c2f28e941f732c71ba90e27c24f62ee918bd4d9a8cfb3553f2f81e5493c7f0be94a11c1911b643a9108f231dd6f60df3fa9586b5d2e3e9e1fe
   languageName: node
   linkType: hard
 
